@@ -18,7 +18,7 @@ createRoot(document.getElementById("root")!).render(
       domain={import.meta.env.VITE_AUTH0_DOMAIN as string}
       clientId={import.meta.env.VITE_AUTH0_CLIENT_ID as string}
       authorizationParams={{
-        redirect_uri: "https://invite.fgacyc.com/callback",
+        redirect_uri: globalThis.location.origin,
         audience: import.meta.env.VITE_AUTH0_AUDIENCE as string,
       }}
     >
