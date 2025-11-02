@@ -66,6 +66,9 @@ const Details = () => {
       })),
     ) ?? [];
 
+  // Check if the logged-in user is already a member
+  const isCurrentMember = members.some((member) => member.id === user?.sub);
+
   // Get the logged-in user's pending invite (if exists)
   // Note: user.sub from Auth0 should match invite.node.user.id (the database user ID)
   const userPendingInvite =
@@ -107,6 +110,7 @@ const Details = () => {
         <CGHeader
           members={members ?? []}
           hasPendingInvite={!!userPendingInvite}
+          isCurrentMember={isCurrentMember}
         />
         <div className="flex w-full flex-col gap-3 px-4 pt-3">
           <div className="flex w-full flex-row items-center justify-between">

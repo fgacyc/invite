@@ -8,11 +8,13 @@ import { useNavigate } from "react-router";
 interface CGHeaderProps {
   members: GetCGMembersResponse["connect_groupCollection"]["edges"][0]["node"]["user_connect_groupCollection"]["edges"][0]["node"]["user"][];
   hasPendingInvite?: boolean;
+  isCurrentMember?: boolean;
 }
 
 export const CGHeader: React.FC<CGHeaderProps> = ({
   members,
   hasPendingInvite = false,
+  isCurrentMember = false,
 }) => {
   const cgId = sessionStorage.getItem("currentCgId");
   const { data, isLoading } = useCGDetails(cgId ?? "");
@@ -64,13 +66,19 @@ export const CGHeader: React.FC<CGHeaderProps> = ({
           </p>
         </div>
         <Button
-          label={hasPendingInvite ? "Pending..." : "Join Group!"}
+          label={
+            isCurrentMember
+              ? "Already Member"
+              : hasPendingInvite
+                ? "Pending..."
+                : "Join Group!"
+          }
           onClick={() => {
-            if (!hasPendingInvite) {
+            if (!hasPendingInvite && !isCurrentMember) {
               navigate("/cg/profile");
             }
           }}
-          disabled={hasPendingInvite}
+          disabled={hasPendingInvite || isCurrentMember}
         />
       </div>
       <div className="text-info-gray flex flex-col gap-1.5">
